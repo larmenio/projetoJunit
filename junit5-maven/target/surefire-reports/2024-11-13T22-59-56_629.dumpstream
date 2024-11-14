@@ -1,0 +1,5 @@
+# Created at 2024-11-13T22:59:56.771
+Boot Manifest-JAR contains absolute paths in classpath 'F:\Mitel\Teste\junit5-maven\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
