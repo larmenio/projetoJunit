@@ -1,11 +1,7 @@
 package com.example;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -14,22 +10,25 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
-import java.util.Scanner;
 
 import org.junit.jupiter.api.AfterAll;
 
 public class WebPageTest {
-	
+
 	private static WebDriver driver;
 	private static ChromeActions cActions;
     Logger logger = LoggerFactory.getLogger(WebPageTest.class);
     private static LoginPage login;
-	
+
 	@BeforeEach
     public void setUp() {
-	    System.setProperty("webdriver.chrome.driver", "F:\\chromedriver-win64\\chromedriver.exe");
-	    logger.info("------------------Starting Test---------------------");
+	    System.setProperty("webdriver.chrome.driver", "C:.\\chromedriver-win64\\chromedriver.exe");
+		logger.info("--- Testing Login Process For All Users Available In The List ---");
+		logger.info("------------------Starting Test---------------------");
 	    // Set Chrome options
 	    ChromeOptions options = new ChromeOptions();
 	    options.addArguments("--remote-allow-origins=*"); // Allow remote connections
@@ -41,12 +40,12 @@ public class WebPageTest {
 
 	    // Initialize ChromeDriver with options
 	    driver = new ChromeDriver(options);
-	    
+
 	    cActions = new ChromeActions(driver);
         cActions.open();
 
     }
-	
+
 	@Test
     public void testLoginInPage() {
 		cActions = new ChromeActions(driver);
@@ -55,25 +54,35 @@ public class WebPageTest {
 		login = new LoginPage(driver);
 		List<String> users = login.getUsers();
 		users.forEach(username -> {
-		    logger.info("=========> Username: " + username + "<============");
+		    logger.info("=========> Username: " + username + " <============");
 		    List<String> password = login.getPass();
 		    password.forEach(pass -> {
-		        logger.info("=========> Password: " + pass + "<============");
+		        logger.info("=========> Password: " + pass + " <============");
 		        login.insertingData(username, pass);
+				boolean loginVerified = login.verifyLoggin();
+				if(loginVerified) {
+					logger.info("User: " + username + "is loging correctly.");
+					assertTrue(loginVerified);
+				} else {
+					logger.info("User: " + username + "is blocked correctly.");
+					assertFalse(loginVerified);
+				}
+//Initial idea here was to return to login page with logout tag, but for some reason I was not
+//to open the side tab and click the logout button, so as the page turn possible to go directly I did this way.
 		        driver.get("https://www.saucedemo.com/");
-//		        login.backToLogin();
-		        
+
+
 		    });
-		       
+
 		});
 		}
-    
-	
+
+//Closing browser
 	@AfterAll
 	public static void tearDown() {
 		// Close the browser
 		cActions = new ChromeActions(driver);
 		cActions.close();
-        
+
 	}
 }
