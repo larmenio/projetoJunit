@@ -22,41 +22,22 @@ public class LoginPage {
     private By sideBar = By.id("react-burger-menu-btn");
     private By logout = By.id("logout_sidebar_link");
     private By loginVerify = By.id("react-burger-menu-btn");
+    private By chooseBackpack = By.id("add-to-cart-sauce-labs-backpack");
+    private By chooseBikeLight = By.id("add-to-cart-sauce-labs-bike-light");
+    private By removeBikeLight = By.id("remove-sauce-labs-bike-light");
+    private By checkout = By.id("checkout");
+    private By firstNameTag = By.id("first-name");
+    private By lastNameTag = By.id("last-name");
+    private By postalTag = By.id("postal-code");
+    private By continueTag = By.id("continue");
+    private By finishTag = By.id("finish");
+
+
 
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
-
-    public List<String> getUsers() {
-    	WebElement credentialsElement = driver.findElement(credentialsList);
-    	String credentialsText = credentialsElement.getText();
-
-    	Pattern pattern = Pattern.compile("(?m)^\\s*(\\S+)$"); // Matches each line containing a single word (username)
-        Matcher matcher = pattern.matcher(credentialsText);
-
-        List<String> usernames = new ArrayList<>();
-
-        // Add each matched username to the list
-        while (matcher.find()) {
-            usernames.add(matcher.group(1).trim());
-        }
-    	return usernames;
-    }
-
-    public List<String> getPass() {
-    	WebElement passLocal = driver.findElement(By.xpath("//*[@id='root']/div/div[2]/div[2]/div/div[2]"));
-    	String passText = passLocal.getText();
-
-    	Pattern pattern = Pattern.compile("(?m)^\\s*(\\S+)$"); // Matches each line containing a single word (username)
-        Matcher matcher = pattern.matcher(passText);
-
-        List<String> passwords = new ArrayList<>();
-        while (matcher.find()) {
-        	passwords.add(matcher.group(1));
-        }
-		return passwords;
     }
 
     public void insertingData(String user, String pass) {
@@ -78,4 +59,37 @@ public class LoginPage {
         boolean elementPresent = !driver.findElements(loginVerify).isEmpty();
         return elementPresent;
     }
+
+    public void chooseItem() {
+        WebElement backpack = driver.findElement(chooseBackpack);
+        backpack.click();
+
+        WebElement bikeLight = driver.findElement(chooseBikeLight);
+        bikeLight.click();
+    }
+
+    public void cart() {
+        driver.get("https://www.saucedemo.com/cart.html");
+        WebElement bikeLightDelete = driver.findElement(removeBikeLight);
+        bikeLightDelete.click();
+    }
+
+    public void finalizingOrder(String firstName, String lastName, String postalCode) {
+        WebElement checkoutButton = driver.findElement(checkout);
+        checkoutButton.click();
+
+        WebElement firstNameSpace = driver.findElement(firstNameTag);
+        firstNameSpace.sendKeys(firstName);
+        WebElement lastNameSpace = driver.findElement(lastNameTag);
+        lastNameSpace.sendKeys(lastName);
+        WebElement postal = driver.findElement(postalTag);
+        postal.sendKeys(postalCode);
+
+        WebElement continueButton = driver.findElement(continueTag);
+        continueButton.click();
+        WebElement finishButton = driver.findElement(finishTag);
+        finishButton.click();
+
+    }
+
 }

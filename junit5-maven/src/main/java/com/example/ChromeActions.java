@@ -1,7 +1,16 @@
 package com.example;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.Files;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.apache.commons.io.FileUtils;
 
 	public class ChromeActions {
 		private WebDriver driver;
@@ -28,5 +37,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 	    // Get the page title
 	    public String getTitle() {
 	        return driver.getTitle();
+
 	    }
+
+		public void screenshot() throws IOException{
+			File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+        // Specify the location to save the screenshot
+			File destinationFile = new File("C:.\\screenshot.png");
+
+			// Copy the screenshot to the destination
+			FileUtils.copyFile(screenshot, destinationFile);
+		}
 	}

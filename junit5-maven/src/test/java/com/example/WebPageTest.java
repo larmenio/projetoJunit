@@ -27,7 +27,7 @@ public class WebPageTest {
 	@BeforeEach
     public void setUp() {
 	    System.setProperty("webdriver.chrome.driver", "C:.\\chromedriver-win64\\chromedriver.exe");
-		logger.info("--- Testing Login Process For All Users Available In The List ---");
+		logger.info("------------ Testing Purchase Process --------------");
 		logger.info("------------------Starting Test---------------------");
 	    // Set Chrome options
 	    ChromeOptions options = new ChromeOptions();
@@ -52,31 +52,26 @@ public class WebPageTest {
 		logger.info(cActions.getTitle());
 		logger.info("--------------------------Starting Login Process---------------------------");
 		login = new LoginPage(driver);
-		List<String> users = login.getUsers();
-		users.forEach(username -> {
-		    logger.info("=========> Username: " + username + " <============");
-		    List<String> password = login.getPass();
-		    password.forEach(pass -> {
-		        logger.info("=========> Password: " + pass + " <============");
-		        login.insertingData(username, pass);
-				boolean loginVerified = login.verifyLoggin();
-				if(loginVerified) {
-					logger.info("User: " + username + "is loging correctly.");
-					assertTrue(loginVerified);
-				} else {
-					logger.info("User: " + username + "is blocked correctly.");
-					assertFalse(loginVerified);
-				}
-//Initial idea here was to return to login page with logout tag, but for some reason I was not
-//to open the side tab and click the logout button, so as the page turn possible to go directly I did this way.
-		        driver.get("https://www.saucedemo.com/");
-
-
-		    });
-
-		});
+		String username = "standard_user";
+		String pass = "secret_sauce";
+		logger.info("=========> Password: " + pass + " <============");
+		login.insertingData(username, pass);
+		boolean loginVerified = login.verifyLoggin();
+		if(loginVerified) {
+			logger.info("User: " + username + "is loging correctly.");
+			assertTrue(loginVerified);
+		} else {
+			logger.info("User: " + username + "is not logged.");
 		}
-
+		login.chooseItem();
+		login.cart();
+		login.finalizingOrder("lucas", "armenio", "000000");
+		try {
+			cActions.screenshot();
+		}  catch (Exception e) {
+			// No need to crash the tests if the screenshot fails
+		}
+	}
 //Closing browser
 	@AfterAll
 	public static void tearDown() {
