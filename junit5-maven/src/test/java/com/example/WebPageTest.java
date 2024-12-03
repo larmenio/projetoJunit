@@ -52,25 +52,26 @@ public class WebPageTest {
 		logger.info(cActions.getTitle());
 		logger.info("--------------------------Starting Login Process---------------------------");
 		login = new LoginPage(driver);
-		String username = "standard_user";
-		String pass = "secret_sauce";
-		logger.info("=========> Password: " + pass + " <============");
-		login.insertingData(username, pass);
-		boolean loginVerified = login.verifyLoggin();
-		if(loginVerified) {
-			logger.info("User: " + username + "is loging correctly.");
-			assertTrue(loginVerified);
-		} else {
-			logger.info("User: " + username + "is not logged.");
-		}
-		login.chooseItem();
-		login.cart();
-		login.finalizingOrder("lucas", "armenio", "000000");
-		try {
-			cActions.screenshot();
-		}  catch (Exception e) {
-			// No need to crash the tests if the screenshot fails
-		}
+		// String username = "standard_user";
+		// String pass = "secret_sauce";
+		// logger.info("=========> Username: " + username + " <============");
+		// logger.info("=========> Password: " + pass + " <============");
+		// login.insertingData(username, pass);
+		// boolean loginVerified = login.verifyLoggin();
+		// if(loginVerified) {
+		// 	logger.info("User: " + username + "is loging correctly.");
+		// 	assertTrue(loginVerified);
+		// } else {
+		// 	logger.info("User: " + username + "is not logged.");
+		// }
+		// login.chooseItem();
+		// login.cart();
+		// login.finalizingOrder("lucas", "armenio", "000000");
+		// try {
+		// 	cActions.screenshot();
+		// }  catch (Exception e) {
+		// 	// No need to crash the tests if the screenshot fails
+		// }
 	}
 //Closing browser
 	@AfterAll

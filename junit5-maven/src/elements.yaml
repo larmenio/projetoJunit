@@ -1,0 +1,16 @@
+elements:
+  username_field_ID: user-name
+  password_field_ID: password
+  login_button_ID: login-button
+  login_credentials_ID: login_credentials
+  sidebar_button_ID: react-burger-menu-btn
+  logout_link_ID: logout_sidebar_link
+  backpack_button_ID: add-to-cart-sauce-labs-backpack
+  bike_light_button_ID: add-to-cart-sauce-labs-bike-light
+  remove_bike_light_button_ID: remove-sauce-labs-bike-light
+  checkout_button_ID: checkout
+  first_name_field_ID: first-name
+  last_name_field_ID: last-name
+  postal_code_field_ID: postal-code
+  continue_button_ID: continue
+  finish_button_ID: finish
